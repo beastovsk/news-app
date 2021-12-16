@@ -49,6 +49,9 @@ const httpExample = {
 
 const http = httpExample
 
+const select = document.querySelector('.form-select')
+const btn = document.querySelector('.btn')
+
 const newsService = (() => {
     const apiKey = '2b0e071f6ad840fabd5f4049217e76f5'
     const apiUrl = 'https://newsapi.org/v2'
@@ -64,14 +67,23 @@ const newsService = (() => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadNews()
+    loadCountryNews()
 })
 
+const loadCountryNews = () => {
+    let country = ''
+    btn.addEventListener('click', () => {
+        country = select.value
+        loadNews()
+    })
 
-// Load news
-const loadNews = () => {
-    newsService().topHeadlines('ru', onGetResponse)
+    
+    // Load news
+    const loadNews = () => {
+        newsService().topHeadlines(country, onGetResponse)
+    }
 }
+
 
 const onGetResponse = (res) => {
     console.log(res)
@@ -103,5 +115,4 @@ const newsTemplate = ({ content, description, urlToImage, url }) => {
             </div>
         </div>
     `
-
 }
